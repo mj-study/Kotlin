@@ -1,6 +1,6 @@
 package com.group.libraryapp.service.book
 
-import com.group.libraryapp.domain.book.Book
+import com.group.libraryapp.domain.Book
 import com.group.libraryapp.domain.book.BookRepository
 import com.group.libraryapp.domain.user.User
 import com.group.libraryapp.domain.user.UserRepository
@@ -51,7 +51,12 @@ class BookServiceTest @Autowired constructor(
     fun loanBookTest() {
         //given
         bookRepository.save(Book("개미"))
-        val savedUser = userRepository.save(User("한강", 30))
+        val savedUser = userRepository.save(
+            User(
+                "한강",
+                30
+            )
+        )
         val request = BookLoanRequest("한강", "개미")
 
         //when
@@ -71,8 +76,19 @@ class BookServiceTest @Autowired constructor(
     fun loanBookFailTest() {
         //given
         bookRepository.save(Book("개미"))
-        val savedUser = userRepository.save(User("한강", 30))
-        userLoanHistoryRepository.save(UserLoanHistory(savedUser, "개미", false))
+        val savedUser = userRepository.save(
+            User(
+                "한강",
+                30
+            )
+        )
+        userLoanHistoryRepository.save(
+            UserLoanHistory(
+                savedUser,
+                "개미",
+                false
+            )
+        )
         val request = BookLoanRequest("한강", "개미")
 
         //when & then
@@ -88,8 +104,19 @@ class BookServiceTest @Autowired constructor(
     fun returnBook() {
         //given
         bookRepository.save(Book("개미"))
-        val savedUser = userRepository.save(User("한강", 30))
-        userLoanHistoryRepository.save(UserLoanHistory(savedUser, "개미", false))
+        val savedUser = userRepository.save(
+            User(
+                "한강",
+                30
+            )
+        )
+        userLoanHistoryRepository.save(
+            UserLoanHistory(
+                savedUser,
+                "개미",
+                false
+            )
+        )
         val request = BookReturnRequest("한강", "개미")
 
         //when
