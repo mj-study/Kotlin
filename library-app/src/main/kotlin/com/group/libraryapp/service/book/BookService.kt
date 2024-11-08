@@ -9,6 +9,7 @@ import com.group.libraryapp.dto.book.request.BookLoanRequest
 import com.group.libraryapp.dto.book.request.BookRequest
 import com.group.libraryapp.dto.book.request.BookReturnRequest
 import com.group.libraryapp.dto.book.response.BookStatResponse
+import com.group.libraryapp.repository.book.BookQuerydslRepository
 import com.group.libraryapp.util.fail
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,6 +19,7 @@ class BookService(
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository,
     private val userLoanHistoryRepository: UserLoanHistoryRepository,
+    private val bookQuerydslRepository: BookQuerydslRepository,
 ) {
 
     @Transactional
@@ -57,8 +59,11 @@ class BookService(
 
     @Transactional(readOnly = true)
     fun getBookStatistics(): List<BookStatResponse> {
+        // 리팩토링 v3 -> Querydsl 사용
+        return bookQuerydslRepository.getStats()
+
         // 리팩토링 v2 -> SQL 이용 JPQL
-        return bookRepository.getStats()
+//        return bookRepository.getStats()
 
 
         // 리팩토링 v1 -> groupBy 이용
